@@ -50,9 +50,9 @@ public class Percolation {
             }
 
             if (row == N) { //&& grid.find(position) == grid.find(0)){
-               // if (grid.connected(position, 0)) {
-               //     backWash.union(siteCount+1, position);
-               // }
+                // if (grid.connected(position, 0)) {
+                //     backWash.union(siteCount+1, position);
+                // }
                 grid.union(siteCount+1, position);
             }
 
@@ -84,7 +84,7 @@ public class Percolation {
     // is site (row, col) full?
     public boolean isFull(int row, int col) {
         validate(row, col);
-        return backWash.connected(xyTo1D(row, col), 0);
+        return isOpen(row, col) && backWash.connected(xyTo1D(row, col), 0);
     }
 
     // number of open sites
@@ -114,3 +114,4 @@ public class Percolation {
 
     }
 }
+
