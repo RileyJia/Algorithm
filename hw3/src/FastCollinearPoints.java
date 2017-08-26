@@ -3,6 +3,7 @@ import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * Created by jia on 8/12/17.
@@ -14,7 +15,7 @@ public class FastCollinearPoints {
     private double slopeStart;
     private double slopeEnd;
     private Point[] secCopy;
-    private LineSegment[] s;
+    private LinkedList<LineSegment> s = new LinkedList<>();
     private int num;
 
     // finds all line segments containing 4 or more points
@@ -29,12 +30,11 @@ public class FastCollinearPoints {
         for (int i = 0; i < points.length; i++) {
             if (points[i] == null) throw new java.lang.IllegalArgumentException("argument is null");
         }
-        
+
         Point[] copy = new Point[points.length];
         for (int i = 0; i < points.length; i++) {
             copy[i] = points[i];
         }
-        //System.arraycopy(points, 0, copy, 0, points.length);
 
         Arrays.sort(copy);
 
@@ -45,7 +45,6 @@ public class FastCollinearPoints {
 
 
         elements = 0;
-        s  = new LineSegment[0];
         num = 0;
         points = null;
 
@@ -76,17 +75,13 @@ public class FastCollinearPoints {
                     Point max = secCopy[j];
                     Point min = secCopy[j];
                     for (int k = j + 1; k <= end; k++){
-                        if (secCopy[k].compareTo(max) == 1) max = secCopy[k];
-                        if (secCopy[k].compareTo(min) == -1) min = secCopy[k];
+                        if (secCopy[k].compareTo(max) > 0) max = secCopy[k];
+                        if (secCopy[k].compareTo(min) < 0) min = secCopy[k];
 
                     }
-                    if (copy[i].compareTo(min) == -1) {
+                    if (copy[i].compareTo(min) < 0) {
                         num += 1;
-                        LineSegment[] temp = new LineSegment[num];
-                        System.arraycopy(s, 0, temp, 0, s.length);
-                        //temp[num - 1] = new LineSegment(copy[i], secCopy[end]);
-                        s = temp;
-                        s[num - 1] = new LineSegment(copy[i], max);
+                        s.add(new LineSegment(copy[i], max));
                     }
                 }
             }
@@ -100,7 +95,7 @@ public class FastCollinearPoints {
 
     // the line segments
     public LineSegment[] segments(){
-        return s;
+        return s.toArray(new LineSegment[s.size()]);
     }
 
     public static void main(String[] args) {
@@ -108,7 +103,7 @@ public class FastCollinearPoints {
         // read the n points from a file
 
         //In in = new In(args[0]);
-        In in = new In("collinear/horizontal5.txt");
+        In in = new In("collinear/input40.txt");
         int n = in.readInt();
         Point[] points = new Point[n];
         for (int i = 0; i < n; i++) {

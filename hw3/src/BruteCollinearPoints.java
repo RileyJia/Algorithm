@@ -14,11 +14,7 @@ public class BruteCollinearPoints {
 
     public BruteCollinearPoints(Point[] points) {
 
-        Point[] copy = new Point[points.length];
-        System.arraycopy(points, 0, copy, 0, points.length);
 
-
-        Arrays.sort(copy);
 
         if (points == null) throw new java.lang.IllegalArgumentException("no argument");
 
@@ -30,10 +26,15 @@ public class BruteCollinearPoints {
 
 
         for (int i = 1; i < points.length; i++) {
-            if (copy[i].compareTo(copy[i-1]) == 0)
+            if (points[i].compareTo(points[i-1]) == 0)
                 throw new java.lang.IllegalArgumentException("repeated points");
         }
 
+        Point[] copy = new Point[points.length];
+        System.arraycopy(points, 0, copy, 0, points.length);
+
+
+        Arrays.sort(copy);
         points = null;
 
         num = 0;
@@ -66,6 +67,10 @@ public class BruteCollinearPoints {
 
     // the line segments
     public LineSegment[] segments() {
+
+
+
+
         return s;
     }
 
