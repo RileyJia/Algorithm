@@ -17,11 +17,13 @@ public class BruteCollinearPoints {
         Point[] copy = new Point[points.length];
         System.arraycopy(points, 0, copy, 0, points.length);
 
+
         Arrays.sort(copy);
 
         if (points == null) throw new java.lang.IllegalArgumentException("no argument");
 
         if (points.length == 0) throw new java.lang.IllegalArgumentException("argument is empty");
+
         for (int i = 0; i < points.length; i++) {
             if (points[i] == null) throw new java.lang.IllegalArgumentException("argument is null");
         }
@@ -31,6 +33,8 @@ public class BruteCollinearPoints {
             if (copy[i].compareTo(copy[i-1]) == 0)
                 throw new java.lang.IllegalArgumentException("repeated points");
         }
+
+        points = null;
 
         num = 0;
         s  = new LineSegment[0];
@@ -69,7 +73,7 @@ public class BruteCollinearPoints {
 
         // read the n points from a file
         // In in = new In(args[0]);
-        In in = new In("input8.txt");
+        In in = new In("input6.txt");
         int n = in.readInt();
         Point[] points = new Point[n];
         for (int i = 0; i < n; i++) {
